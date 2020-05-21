@@ -6,6 +6,9 @@ header("Content-Type: text/html; charset=UTF-8",true);
 
 $postjson = json_decode(file_get_contents('php://input'), true);
 
+$subject = ['.',','];
+$replace =['','.'];
+
 
 
 
@@ -29,17 +32,18 @@ if($postjson['requisicao'] == 'listar'){
       foreach ($res[$i] as $key => $value) {
       }
     $dados[] = array(
+      
       'idMaterial' => $res[$i]['idMaterial'],
       'cod_lcin' => $res[$i]['cod_lcin'],
       'descricao' => $res[$i]['descricao'],
       'unidade' => $res[$i]['unidade'],
       'quantidade' => $res[$i]['quantidade'],
-      'custoUnit' => $res[$i]['custoUnit'],
+      'custoUnit' => number_format((float)$res[$i]['custoUnit'], 2, ",", "."),
       'marca' => $res[$i]['marca'],
       'observacoes' => $res[$i]['observacoes'],
-
+      
     );
-
+    
  }
 
         if($query){
@@ -61,12 +65,14 @@ if($postjson['requisicao'] == 'listar'){
      $query->bindValue(":descricao", $postjson['descricao']);
      $query->bindValue(":unidade", $postjson['unidade']);
      $query->bindValue(":quantidade", $postjson['quantidade']);
+     $postjson['custoUnit'] = str_replace(',','.',str_replace('.','',$postjson['custoUnit']));
      $query->bindValue(":custoUnit", $postjson['custoUnit']);
      $query->bindValue(":marca", $postjson['marca']);
      $query->bindValue(":observacoes", $postjson['observacoes']);
      $query->execute();
 
      $idMaterial = $pdo->lastInsertId();
+     
      
 
     if($query){
@@ -90,8 +96,10 @@ if($postjson['requisicao'] == 'listar'){
      $query->bindValue(":descricao", $postjson['descricao']);
      $query->bindValue(":unidade", $postjson['unidade']);
      $query->bindValue(":quantidade", $postjson['quantidade']);
+     $postjson['custoUnit'] = str_replace(',','.',str_replace('.','',$postjson['custoUnit']));
      $query->bindValue(":custoUnit", $postjson['custoUnit']);
-     $query->bindValue(":marca", $postjson['marca']);
+     $query->bindValue(":marca", $postjson['marca'
+     ]);
      $query->bindValue(":observacoes", $postjson['observacoes']);
      $query->bindValue(":idMaterial", $postjson['idMaterial']);
      $query->execute();

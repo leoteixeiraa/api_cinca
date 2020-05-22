@@ -22,7 +22,7 @@ if($postjson['requisicao'] == 'listar'){
         $query = $pdo->query("SELECT * from materiais order by idMaterial desc limit $postjson[start], $postjson[limit]");
     }else{
       $busca = $postjson['textoBuscar'] . '%';
-      $query = $pdo->query("SELECT * from materiais where descricao LIKE _utf8'%$busca%' or cod_lcin LIKE '%$busca%' order by idMaterial desc limit $postjson[start], $postjson[limit]");
+      $query = $pdo->query("SELECT * from materiais where descricao LIKE _utf8'%$busca%' or cod_lcin LIKE _utf8'%$busca%' order by idMaterial desc limit $postjson[start], $postjson[limit]");
     }
 
 
@@ -98,8 +98,7 @@ if($postjson['requisicao'] == 'listar'){
      $query->bindValue(":quantidade", $postjson['quantidade']);
      $postjson['custoUnit'] = str_replace(',','.',str_replace('.','',$postjson['custoUnit']));
      $query->bindValue(":custoUnit", $postjson['custoUnit']);
-     $query->bindValue(":marca", $postjson['marca'
-     ]);
+     $query->bindValue(":marca", $postjson['marca']);
      $query->bindValue(":observacoes", $postjson['observacoes']);
      $query->bindValue(":idMaterial", $postjson['idMaterial']);
      $query->execute();

@@ -32,7 +32,7 @@ if($postjson['requisicao'] == 'listar'){
       'idServico' => $res[$i]['idServico'],
       'cod_lcin' => $res[$i]['cod_lcin'],
       'descricao' => $res[$i]['descricao'],
-      'custoUnit' => $res[$i]['custoUnit'],
+      'custoUnit' => number_format((float)$res[$i]['custoUnit'], 2, ",", "."),
       'marca' => $res[$i]['marca'],
       'observacoes' => $res[$i]['observacoes'],
 
@@ -57,7 +57,7 @@ if($postjson['requisicao'] == 'listar'){
 
      $query->bindValue(":cod_lcin", $postjson['cod_lcin']);
      $query->bindValue(":descricao", $postjson['descricao']);
-     $query->bindValue(":custoUnit", $postjson['custoUnit']);
+     $postjson['custoUnit'] = str_replace(',','.',str_replace('.','',$postjson['custoUnit']));
      $query->bindValue(":marca", $postjson['marca']);
      $query->bindValue(":observacoes", $postjson['observacoes']);
      $query->execute();
@@ -84,7 +84,7 @@ if($postjson['requisicao'] == 'listar'){
 
      $query->bindValue(":cod_lcin", $postjson['cod_lcin']);
      $query->bindValue(":descricao", $postjson['descricao']);
-     $query->bindValue(":custoUnit", $postjson['custoUnit']);
+     $postjson['custoUnit'] = str_replace(',','.',str_replace('.','',$postjson['custoUnit']));
      $query->bindValue(":marca", $postjson['marca']);
      $query->bindValue(":observacoes", $postjson['observacoes']);
      $query->bindValue(":idServico", $postjson['idServico']);

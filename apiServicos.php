@@ -6,6 +6,8 @@ header("Content-Type: text/html; charset=UTF-8",true);
 
 $postjson = json_decode(file_get_contents('php://input'), true);
 
+$subject = ['.',','];
+$replace =['','.'];
 
 
 

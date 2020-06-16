@@ -29,7 +29,11 @@ $replace =['','.'];
       
     file_put_contents($file, $image_base64);
 
-
+  //   if($postjson['matManutencaoCheck'] == 1){
+  //     $query = $pdo->query("SELECT * from materiais where matManutencao is true order by idMaterial desc limit $postjson[start], $postjson[limit]");
+  // }else{
+  //      $query = $pdo->query("SELECT * from materiais order by idMaterial desc limit $postjson[start], $postjson[limit]");
+  // }
 
 
 //LISTAGEM DOS USUARIOS E PESQUISA PELO NOME E EMAIL
@@ -42,7 +46,12 @@ if($postjson['requisicao'] == 'listar'){
     }else{
       $busca = $postjson['textoBuscar'] . '%';
       $query = $pdo->query("SELECT * from materiais where descricao LIKE _utf8'%$busca%' or cod_lcin LIKE _utf8'%$busca%' order by idMaterial desc limit $postjson[start], $postjson[limit]");
+    }if($postjson['matManutencaoCheck'] == 1 ){
+      $query = $pdo->query("SELECT * from materiais where matManutencao is true desc limit $postjson[start], $postjson[limit]");
+    }else{
+       $query = $pdo->query("SELECT * from materiais order by idMaterial desc limit $postjson[start], $postjson[limit]");
     }
+
 
 
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -59,7 +68,7 @@ if($postjson['requisicao'] == 'listar'){
       'quantidade' => $res[$i]['quantidade'],
       'custoUnit' => number_format((float)$res[$i]['custoUnit'], 2, ",", "."),
       'marca' => $res[$i]['marca'],
-      'matManutencaoCheck' => $res[$i]['matManutencaoCheck'],
+      'matManutencao' => $res[$i]['matManutencao'],
       'observacoes' => $res[$i]['observacoes'],
       
     );
@@ -79,7 +88,7 @@ if($postjson['requisicao'] == 'listar'){
 
 }else if($postjson['requisicao'] == 'add'){
 
-  $query = $pdo->prepare("INSERT INTO materiais SET cod_lcin = :cod_lcin, descricao = :descricao, unidade = :unidade, quantidade = :quantidade, custoUnit = :custoUnit, marca = :marca, matManutencaoCheck = :matManutencaoCheck, observacoes = :observacoes ");
+  $query = $pdo->prepare("INSERT INTO materiais SET cod_lcin = :cod_lcin, descricao = :descricao, unidade = :unidade, quantidade = :quantidade, custoUnit = :custoUnit, marca = :marca, matManutencao = :matManutencao, observacoes = :observacoes ");
 
      $query->bindValue(":cod_lcin", $postjson['cod_lcin']);
      $query->bindValue(":descricao", $postjson['descricao']);
@@ -88,7 +97,7 @@ if($postjson['requisicao'] == 'listar'){
      $postjson['custoUnit'] = str_replace(',','.',str_replace('.','',$postjson['custoUnit']));
      $query->bindValue(":custoUnit", $postjson['custoUnit']);
      $query->bindValue(":marca", $postjson['marca']);
-     $query->bindValue(":matManutencaoCheck", $postjson['matManutencaoCheck']);
+     $query->bindValue(":matManutencao", $postjson['matManutencao']);
      $query->bindValue(":observacoes", $postjson['observacoes']);
      $query->execute();
 
@@ -111,7 +120,7 @@ if($postjson['requisicao'] == 'listar'){
 
 }else if($postjson['requisicao'] == 'editar'){
 
-  $query = $pdo->prepare("UPDATE materiais SET cod_lcin = :cod_lcin, descricao = :descricao, unidade = :unidade, quantidade = :quantidade, custoUnit = :custoUnit, marca = :marca, matManutencaoCheck = :matManutencaoCheck, observacoes = :observacoes where idMaterial = :idMaterial ");
+  $query = $pdo->prepare("UPDATE materiais SET cod_lcin = :cod_lcin, descricao = :descricao, unidade = :unidade, quantidade = :quantidade, custoUnit = :custoUnit, marca = :marca, matManutencao = :matManutencao, observacoes = :observacoes where idMaterial = :idMaterial ");
 
      $query->bindValue(":cod_lcin", $postjson['cod_lcin']);
      $query->bindValue(":descricao", $postjson['descricao']);
@@ -120,7 +129,7 @@ if($postjson['requisicao'] == 'listar'){
      $postjson['custoUnit'] = str_replace(',','.',str_replace('.','',$postjson['custoUnit']));
      $query->bindValue(":custoUnit", $postjson['custoUnit']);
      $query->bindValue(":marca", $postjson['marca']);
-     $query->bindValue(":matManutencaoCheck", $postjson['matManutencaoCheck']);
+     $query->bindValue(":matManutencao", $postjson['matManutencao']);
      $query->bindValue(":observacoes", $postjson['observacoes']);
      $query->bindValue(":idMaterial", $postjson['idMaterial']);
      $query->execute();

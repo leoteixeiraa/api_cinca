@@ -68,7 +68,11 @@ if($postjson['requisicao'] == 'listar'){
 
 }else if($postjson['requisicao'] == 'add'){
 
-  $query = $pdo->prepare("INSERT INTO pontos SET potencia = :potencia, consumo = :consumo, status = :status, endereco = :endereco, complemento = :complemento, latitude = :latitude, longitude = :longitude, cidade = :cidade, bairro = :bairro, pontoReferencia = :pontoReferencia, uf = :uf, cep = :cep, fabricante = :fabricante, tipoPoste = :tipoPoste, dimensoes = :dimensoes, observacoes = :observacoes ");
+  $query = $pdo->prepare("INSERT INTO pontos SET potencia = :potencia, consumo = :consumo, status = :status,
+   endereco = :endereco, complemento = :complemento, latitude = :latitude,
+    longitude = :longitude, cidade = :cidade, bairro = :bairro, pontoReferencia = :pontoReferencia,
+     uf = :uf, cep = :cep, fabricante = :fabricante, tipoPoste = :tipoPoste,
+      dimensoes = :dimensoes, observacoes = :observacoes ");
 
      $query->bindValue(":potencia", $postjson['potencia']);
      $query->bindValue(":consumo", $postjson['consumo']);
@@ -107,7 +111,12 @@ if($postjson['requisicao'] == 'listar'){
 
 }else if($postjson['requisicao'] == 'editar'){
 
-  $query = $pdo->prepare("UPDATE pontos SET potencia = :potencia, consumo = :consumo, status = :status, endereco = :endereco, complemento = :complemento, latitude = :latitude, longitude = :longitude, cidade = :cidade, bairro = :bairro, pontoReferencia = :pontoReferencia, uf = :uf, cep = :cep, fabricante = :fabricante, tipoPoste = :tipoPoste, dimensoes = :dimensoes, observacoes = :observacoes where idPonto = :idPonto ");
+  $query = $pdo->prepare("UPDATE pontos SET potencia = :potencia, consumo = :consumo,
+   status = :status, endereco = :endereco, complemento = :complemento, latitude = :latitude,
+    longitude = :longitude, cidade = :cidade, bairro = :bairro,
+     pontoReferencia = :pontoReferencia, uf = :uf, cep = :cep,
+      fabricante = :fabricante, tipoPoste = :tipoPoste,
+       dimensoes = :dimensoes, observacoes = :observacoes where idPonto = :idPonto ");
 
   $query->bindValue(":potencia", $postjson['potencia']);
   $query->bindValue(":consumo", $postjson['consumo']);
